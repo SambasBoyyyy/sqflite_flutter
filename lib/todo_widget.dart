@@ -4,15 +4,25 @@ import 'models/todomodel.dart';
 
 class TodoWidget extends StatelessWidget {
   final ToDoModel todo;
-  const TodoWidget({Key? key, required this.todo}) : super(key: key);
+  final VoidCallback onDeletePressed;
+  const TodoWidget({Key? key, required this.todo,required this.onDeletePressed,}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(10),
+
       child: ListTile(
+        leading: IconButton(
+          onPressed: () { onDeletePressed();},
+          icon: Icon(
+            Icons.delete_outline,
+            color: Colors.red,
+          ),
+        ),
         trailing: todo.isImportant == true
             ? Icon(
-          Icons.warning_amber,
+          Icons.notification_important,
           color: Colors.red,
         )
             : SizedBox(),

@@ -50,4 +50,17 @@ create table ${AppConst.tableName} (
     return result.map((json) => ToDoModel.fromJson(json)).toList();
   }
 
+  Future<void> delete(int id) async {
+    try {
+      final db = await instance.database;
+      await db.delete(
+        AppConst.tableName,
+        where: '${AppConst.id} = ?',
+        whereArgs: [id],
+      );
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
 }

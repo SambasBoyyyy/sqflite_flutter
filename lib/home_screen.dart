@@ -32,6 +32,16 @@ class _HomeScreenState extends State<HomeScreen> {
     }).catchError((e) => debugPrint(e.toString()));
   }
 
+  void delete({required ToDoModel todo, required BuildContext context}) async {
+    DatabaseRepository.instance.delete(todo.id!).then((value) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(const SnackBar(content: Text('Deleted')));
+    }).catchError((e) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(e.toString())));
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
 
@@ -65,7 +75,10 @@ class _HomeScreenState extends State<HomeScreen> {
           padding: EdgeInsets.all(16),
           itemBuilder: (context, index) {
             final todo = myTodos[index];
-            return TodoWidget(todo: todo);
+            return TodoWidget(todo: todo,onDeletePressed: () {
+              delete(todo: todo, context: context);
+              getTodos();
+            },);
           },
           itemCount: myTodos.length,
         ),
