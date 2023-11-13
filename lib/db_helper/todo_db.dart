@@ -62,5 +62,18 @@ create table ${AppConst.tableName} (
       print(e.toString());
     }
   }
+  Future<void> update(ToDoModel todo) async {
+    try {
+      final db = await instance.database;
+      db.update(
+        AppConst.tableName,
+        todo.toMap(),
+        where: '${AppConst.id} = ?',
+        whereArgs: [todo.id],
+      );
+    } catch (e) {
+      print(e.toString());
+    }
+  }
 
 }

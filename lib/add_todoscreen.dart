@@ -4,7 +4,8 @@ import 'db_helper/todo_db.dart';
 import 'models/todomodel.dart';
 
 class AddTodoScreen extends StatefulWidget {
-  const AddTodoScreen({Key? key}) : super(key: key);
+  ToDoModel? todo;
+  AddTodoScreen({Key? key, this.todo}) : super(key: key);
 
   @override
   State<AddTodoScreen> createState() => _AddTodoScreenState();
@@ -21,11 +22,38 @@ class _AddTodoScreenState extends State<AddTodoScreen> {
     super.dispose();
   }
   void addTodo() async {
-    ToDoModel todo = ToDoModel(
-        title: titleController.text,
-        describtion: subtitleControler.text,
-        isImportant: important);
-    await DatabaseRepository.instance.insert(todo: todo);
+
+    if (widget.todo == null) {
+      ToDoModel todo = ToDoModel(
+          title: titleController.text,
+          describtion: subtitleControler.text,
+          isImportant: important
+      );
+      await DatabaseRepository.instance.insert(todo: todo);
+    } else {
+      ToDoModel todo_up = ToDoModel(
+          id:widget.todo?.id,
+          title: titleController.text,
+          describtion: subtitleControler.text,
+          isImportant: important
+      );
+      await DatabaseRepository.instance.update(todo_up);
+    }
+  }
+  @override
+  void initState() {
+    addTodoData();
+    super.initState();
+  }
+  void addTodoData() {
+    if (widget.todo != null) {
+      if (mounted)
+        setState(() {
+          titleController.text = widget.todo!.title;
+          subtitleControler.text = widget.todo!.describtion;
+          important = widget.todo!.isImportant;
+        });
+    }
   }
 
   @override
