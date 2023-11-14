@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sqflite_flutter/home_screen.dart';
 
 import 'db_helper/todo_db.dart';
 import 'models/todomodel.dart';
@@ -94,7 +95,13 @@ class _AddTodoScreenState extends State<AddTodoScreen> {
               color: Colors.greenAccent,
               height: 50,
               minWidth: double.infinity,
-              onPressed: addTodo,
+              onPressed: () {
+                addTodo();
+                   Navigator.push(context, MaterialPageRoute(builder: (context) {
+                         return HomeScreen();
+                          }));
+
+                            },
               child: const Text(
                 'Add todo',
                 style: TextStyle(color: Colors.white),
