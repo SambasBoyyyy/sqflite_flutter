@@ -4,7 +4,7 @@ import 'package:path/path.dart';
 import '../models/todomodel.dart';
 import 'app_const.dart';
 
-class DatabaseRepository {
+class DatabaseRepository  {
   static final DatabaseRepository instance = DatabaseRepository._init();
   DatabaseRepository._init();
   Database? _database;
