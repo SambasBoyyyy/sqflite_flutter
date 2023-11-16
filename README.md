@@ -1,6 +1,6 @@
-# sqflite_flutter
+# sqflite_flutter with provider
 
-A new Flutter project.
+A simple Flutter project for learning SQFLITE local database and provider state management 
 
 ## Getting Started
 
